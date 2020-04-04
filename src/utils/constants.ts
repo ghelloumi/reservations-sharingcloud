@@ -1,12 +1,32 @@
 import logo from '../assets/logo.png';
 import imageNotFound from '../assets/imageNotFound.png';
+import meeting from '../assets/meeting.jpg';
+import loader from '../assets/loader.gif';
+import meetingHor from '../assets/meetingHor.jpg';
+import { IActionsMap, IStringMap } from './_config.interfaces';
 
-export const MOBILE_BREAKPOINT = 568;
+export const MOBILE_BREAKPOINT: number = 568;
 
-export const IMAGES: any = {
-  logo, imageNotFound
+export const IMAGES: IStringMap = {
+  logo,
+  imageNotFound,
+  meeting,
+  loader,
+  meetingHor,
 };
 
-export const TEXTS: any= {
-  APP_TITLE: "Reservation de salles"
-}
+export const TEXTS: IStringMap = {
+  APP_TITLE: 'Reservation de salles',
+};
+
+export const ACTIONS: IActionsMap = {
+  LOGIN_ACTIONS: {
+    SUCCESS: 'SUCCESS',
+    ERROR: 'ERROR',
+    CLEAR: 'CLEAR',
+    LOGIN_REQUEST: 'LOGIN_REQUEST',
+    LOGIN_SUCCESS: 'LOGIN_SUCCESS',
+    LOGIN_FAILURE: 'LOGIN_FAILURE',
+    LOGOUT: 'LOGOUT',
+  },
+};

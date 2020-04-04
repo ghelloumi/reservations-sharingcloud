@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import Banner from './components/organisms/Banner';
 import { GlobalStyles } from './theme/global';
-import Routes from './Routes';
+import Routes from './routes/Routes';
 
 function App() {
   return (

@@ -44,7 +44,7 @@ const MenuEl = styled.nav`
 const Menu: React.FunctionComponent<{
   menus: Array<IMenu>;
 }> = ({ menus }) => {
-  const [mobileView, setMobileView] = useState(true);
+  const [mobileView, setMobileView] = useState(window.innerWidth <= MOBILE_BREAKPOINT);
 
   useEffect(() => {
     window.addEventListener('resize', () =>
