@@ -4,9 +4,12 @@ import styled from 'styled-components';
 const PageLayoutWrapper = styled.main`
   position: absolute;
   margin-top: 3rem;
-  height: 100%;
   width: 100%;
   padding: 0.5rem;
+  height: calc(100vh - 3.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 type LayoutProps = {

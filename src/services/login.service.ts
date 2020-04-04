@@ -35,6 +35,7 @@ export function login(username: string) {
       const user = await handleResponse(response);
       localStorage.setItem('user', JSON.stringify(user));
       dispatch(loginActions.successLogin(user));
+      window.location.href = "/"
     } catch (error) {
       dispatch(loginActions.failureLogin(error.toString()));
     }

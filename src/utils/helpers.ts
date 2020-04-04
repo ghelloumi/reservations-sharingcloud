@@ -1,7 +1,3 @@
-import { createBrowserHistory } from 'history';
-
-export const history = createBrowserHistory();
-
 export function authHeader() {
   // return authorization header with jwt token
   let user = JSON.parse(<string>localStorage.getItem('user'));
@@ -12,3 +8,5 @@ export function authHeader() {
     return {};
   }
 }
+
+export const isLoggedIn = () => !!localStorage.getItem('user');
