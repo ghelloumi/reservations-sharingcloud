@@ -1,7 +1,12 @@
 import React from 'react';
+import { PageLayout } from '../PageLayout';
 
 const Login: React.FunctionComponent = () => {
-  return <div>Page Login</div>;
+  return (
+    <PageLayout>
+      <div>Page Login</div>
+    </PageLayout>
+  );
 };
 
 export default Login;
