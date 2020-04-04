@@ -5,5 +5,6 @@ export interface IMenu {
 
 export interface IResponsiveMenu {
   open: boolean;
+  setOpen: any;
   menus: IMenu[];
 }

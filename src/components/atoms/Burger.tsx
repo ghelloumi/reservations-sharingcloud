@@ -45,7 +45,11 @@ const StyledBurger = styled.button<{ open: boolean }>`
   }
 `;
 
-const Burger: React.FunctionComponent<IBurger> = ({ open, setOpen }) => {
+const Burger: React.FunctionComponent<IBurger> = ({
+  open,
+  setOpen,
+  mobileView,
+}) => {
   return (
     <StyledBurger
       open={open}
@@ -55,6 +59,7 @@ const Burger: React.FunctionComponent<IBurger> = ({ open, setOpen }) => {
       aria-haspopup="dialog"
       aria-controls="menu"
       title="MobileMenu"
+      aria-hidden={mobileView}
     >
       <div />
       <div />

@@ -7,4 +7,5 @@ export interface IImage {
 export interface IBurger {
   open: boolean;
   setOpen: any;
+  mobileView: boolean;
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Image from './atoms/Image';
-import { IMAGES, TEXTS } from '../utils/constants';
-import Menu from './molecules/Menu';
-import { IMenu } from './molecules/_molecules.interfaces';
+import Image from '../atoms/Image';
+import { IMAGES, TEXTS } from '../../utils/constants';
+import Menu from '../molecules/Menu';
+import { IMenu } from '../molecules/_molecules.interfaces';
 
 const BannerEl = styled.div`
   display: flex;
@@ -16,6 +16,7 @@ const BannerEl = styled.div`
   position: relative;
   position: fixed;
   width: 100%;
+  z-index: 1;
 
   > span {
     color: #4d4d4d;

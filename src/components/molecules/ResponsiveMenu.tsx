@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IResponsiveMenu } from './_molecules.interfaces';
+import { Link } from 'react-router-dom';
 
 export const StyledMenu = styled.nav<{ open: boolean }>`
   display: flex;
@@ -37,14 +38,25 @@ export const StyledMenu = styled.nav<{ open: boolean }>`
 
 const ResponsiveMenu: React.FunctionComponent<IResponsiveMenu> = ({
   open,
+  setOpen,
   menus,
 }) => {
   return (
-    <StyledMenu open={open} role="navigation" aria-label="main navigation">
+    <StyledMenu
+      open={open}
+      role="navigation"
+      aria-label="main mobile navigation"
+    >
       {menus.map((e) => (
-        <a key={e.id} href="/" aria-hidden={!open} aria-label={e.name}>
+        <Link
+          key={e.id}
+          to={`/${e.name.toLowerCase()}`}
+          aria-hidden={!open}
+          aria-label={e.name}
+          onClick={() => setOpen(!open)}
+        >
           {e.name}
-        </a>
+        </Link>
       ))}
     </StyledMenu>
   );
