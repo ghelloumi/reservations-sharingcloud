@@ -4,22 +4,38 @@ import { IMenu } from './_molecules.interfaces';
 import { media } from '../../theme/responsive.config';
 import Burger from '../atoms/Burger';
 import ResponsiveMenu from './ResponsiveMenu';
+import { isMobile } from '../../utils/helpers';
 
-const MenuEl = styled.ul`
+const MenuEl = styled.nav`
   list-style: none;
   display: flex;
-`;
-const MenuLi = styled.li`
-  ${media.phone} {
-    display: none;
+
+  > a {
+    ${media.phone} {
+      display: none;
+    }
+    
+    font-weight: bold;
+    color: grey;
+    text-decoration: none;
+    transition: color 0.3s linear;
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      color: #474747;
+      outline: none;
+    }
   }
-`;
 
-const MobileMenuEl = styled.div`
-  display: none;
+  > div {
+    display: none;
 
-  ${media.phone} {
-    display: flex;
+    ${media.phone} {
+      display: flex;
+    }
   }
 `;
 
@@ -29,14 +45,16 @@ const Menu: React.FunctionComponent<{
   const [open, setOpen] = useState(false);
 
   return (
-    <MenuEl>
+    <MenuEl aria-label="main navigation">
       {menus.map((e) => (
-        <MenuLi key={e.id}>{e.name}</MenuLi>
+        <a key={e.id} href="/" aria-hidden={!isMobile} aria-label={e.name}>
+          {e.name}
+        </a>
       ))}
-      <MobileMenuEl>
+      <div>
         <Burger open={open} setOpen={setOpen} />
-        <ResponsiveMenu open={open} menus={menus}/>
-      </MobileMenuEl>
+        <ResponsiveMenu open={open} menus={menus} />
+      </div>
     </MenuEl>
   );
 };

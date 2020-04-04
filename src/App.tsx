@@ -1,12 +1,14 @@
 import React from 'react';
 import { Layout } from './components/Layout';
-import Header from './components/Header';
+import Banner from './components/Banner';
+import {GlobalStyles} from "./theme/global";
 
 function App() {
   return (
       <div className="App">
+        <GlobalStyles />
         <Layout>
-          <Header />
+          <Banner />
         </Layout>
       </div>
   );

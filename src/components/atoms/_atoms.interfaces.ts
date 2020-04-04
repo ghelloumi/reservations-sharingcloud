@@ -3,3 +3,8 @@ export interface IImage {
   src: string;
   className: string;
 }
+
+export interface IBurger {
+  open: boolean;
+  setOpen: any;
+}

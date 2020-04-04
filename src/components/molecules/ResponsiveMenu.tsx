@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IMenu } from './_molecules.interfaces';
+import { IResponsiveMenu } from './_molecules.interfaces';
 
 export const StyledMenu = styled.nav<{ open: boolean }>`
   display: flex;
@@ -13,7 +13,7 @@ export const StyledMenu = styled.nav<{ open: boolean }>`
   position: absolute;
   top: 0;
   left: 100%;
-  width: 12rem;
+  width: 100%;
   transform: ${({ open }) => (open ? 'translateX(-100%)' : 'translateX(0)')};
   transition: transform 0.3s ease-in-out;
 
@@ -29,22 +29,20 @@ export const StyledMenu = styled.nav<{ open: boolean }>`
     text-align: center;
 
     &:hover {
-      color: grey;
+      color: #474747;
+      outline: none;
     }
   }
 `;
 
-const ResponsiveMenu: React.FunctionComponent<{
-  open: boolean;
-  menus: IMenu[];
-}> = ({ open, menus }) => {
+const ResponsiveMenu: React.FunctionComponent<IResponsiveMenu> = ({
+  open,
+  menus,
+}) => {
   return (
-    <StyledMenu open={open}>
-      {menus.map(e => (
-        <a key={e.id} href="/">
-        <span role="img" aria-label="about us">
-          &#x1f481;&#x1f3fb;&#x200d;&#x2642;&#xfe0f;
-        </span>
+    <StyledMenu open={open} role="navigation" aria-label="main navigation">
+      {menus.map((e) => (
+        <a key={e.id} href="/" aria-hidden={!open} aria-label={e.name}>
           {e.name}
         </a>
       ))}

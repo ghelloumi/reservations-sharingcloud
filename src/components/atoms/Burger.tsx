@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { IBurger } from './_atoms.interfaces';
 
 const StyledBurger = styled.button<{ open: boolean }>`
   left: 2rem;
@@ -7,7 +8,7 @@ const StyledBurger = styled.button<{ open: boolean }>`
   flex-direction: column;
   justify-content: space-around;
   width: 2rem;
-  height: 2rem;
+  height: 1.5rem;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -19,8 +20,8 @@ const StyledBurger = styled.button<{ open: boolean }>`
   }
 
   div {
-    width: 2rem;
-    height: 0.25rem;
+    width: 1.6rem;
+    height: 0.2rem;
     background: grey;
     border-radius: 10px;
     transition: all 0.3s linear;
@@ -34,7 +35,8 @@ const StyledBurger = styled.button<{ open: boolean }>`
 
     :nth-child(2) {
       opacity: ${(props) => (props.open ? '0' : '1')};
-      transform: ${(props) => (props.open ? 'translateX(-20px)' : 'translateX(0)')};
+      transform: ${(props) =>
+        props.open ? 'translateX(-20px)' : 'translateX(0)'};
     }
 
     :nth-child(3) {
@@ -43,12 +45,17 @@ const StyledBurger = styled.button<{ open: boolean }>`
   }
 `;
 
-const Burger: React.FunctionComponent<{ open: boolean; setOpen: any }> = ({
-  open,
-  setOpen,
-}) => {
+const Burger: React.FunctionComponent<IBurger> = ({ open, setOpen }) => {
   return (
-    <StyledBurger open={open} onClick={() => setOpen(!open)}>
+    <StyledBurger
+      open={open}
+      onClick={() => setOpen(!open)}
+      aria-label={`${open ? 'Close' : 'Open'} the menu`}
+      aria-expanded={open}
+      aria-haspopup="dialog"
+      aria-controls="menu"
+      title="MobileMenu"
+    >
       <div />
       <div />
       <div />

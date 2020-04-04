@@ -5,7 +5,7 @@ import { IMAGES, TEXTS } from '../utils/constants';
 import Menu from './molecules/Menu';
 import { IMenu } from './molecules/_molecules.interfaces';
 
-const HeaderEl = styled.div`
+const BannerEl = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,15 +14,22 @@ const HeaderEl = styled.div`
   background: #f0f0f0;
   box-shadow: 0 0 2rem #cccccc;
   position: relative;
+  position: fixed;
+  width: 100%;
+
+  > span {
+    color: #4d4d4d;
+    font-weight: 600;
+    font-size: 1.2rem;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+  }
 `;
 
 const ImageEl = styled(Image)`
   height: 2rem;
-`;
-
-const AppTitleEl = styled.span`
-  color: #4d4d4d;
-  font-weight: 600;
 `;
 
 const menus: Array<IMenu> = [
@@ -30,18 +37,18 @@ const menus: Array<IMenu> = [
   { id: 1, name: 'Login' },
 ];
 
-const Header: React.FunctionComponent = () => {
+const Banner: React.FunctionComponent = () => {
   return (
-    <HeaderEl>
+    <BannerEl role="banner">
       <ImageEl
         alt="Application Logo"
         src={IMAGES.logo}
         className="header__logo"
       />
-      <AppTitleEl>{TEXTS.APP_TITLE}</AppTitleEl>
+      <span aria-label="App title">{TEXTS.APP_TITLE}</span>
       <Menu menus={menus} />
-    </HeaderEl>
+    </BannerEl>
   );
 };
 
-export default Header;
+export default Banner;
