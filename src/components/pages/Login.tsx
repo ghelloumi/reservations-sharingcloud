@@ -12,9 +12,10 @@ const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1rem;
+  margin: 1rem 8rem;
   background: #f2f2f2;
   box-shadow: 0 0 1rem #d5d4d4;
+  
 
   > div {
     width: 50%;
@@ -33,6 +34,8 @@ const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
         top: 50%;
         left: 50%;
         transform: translate3d(-50%, -50%, 0);
+        width: 100%;
+        padding: 0 3rem;
 
         div {
           div {
@@ -48,7 +51,7 @@ const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
 
             input {
               height: 2.5rem;
-              width: 15rem;
+              width: 100%;
               border: 1px solid #dfdfdf;
               background: white;
               padding: 0.5rem 1rem;
@@ -78,7 +81,7 @@ const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
           }
 
           button {
-            width: 15rem;
+            width: 100%;
             height: 2.5rem;
             margin-top: 2rem;
             border: 1px solid #e6e6e6;
@@ -99,7 +102,7 @@ const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
 
   ${media.phone} {
     flex-direction: column;
-    margin: 0.5rem;
+    margin: 2rem 0.5rem;
 
     > div {
       display: flex;
@@ -122,6 +125,7 @@ const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
           top: unset;
           left: unset;
           transform: unset;
+          padding: 0 1rem;
 
           div.error__message {
             height: 1rem !important;
@@ -156,7 +160,9 @@ const Login: React.FunctionComponent = () => {
     submitted: false,
   });
 
-  const [mobileView, setMobileView] = useState(window.innerWidth <= MOBILE_BREAKPOINT);
+  const [mobileView, setMobileView] = useState(
+    window.innerWidth <= MOBILE_BREAKPOINT
+  );
 
   useEffect(() => {
     window.addEventListener('resize', () =>
