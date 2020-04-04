@@ -50,6 +50,7 @@ const Menu: React.FunctionComponent<{
     window.addEventListener('resize', () =>
       setMobileView(window.innerWidth <= MOBILE_BREAKPOINT)
     );
+
     return () => window.removeEventListener('resize', () => false);
   });
 
