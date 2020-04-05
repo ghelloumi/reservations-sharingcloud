@@ -13,3 +13,14 @@ export interface IError extends IActionType {
 export interface ISuccess extends IActionType {
   data: IResponse;
 }
+
+export interface IAction extends IActionType {
+  data: IResponse;
+  error?: any;
+}
+
+export interface IReducer {
+  pending?: boolean;
+  data?: any;
+  error?: string;
+}

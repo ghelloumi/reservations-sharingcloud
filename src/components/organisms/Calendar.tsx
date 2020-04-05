@@ -4,9 +4,10 @@ import { getUserToken, range } from '../../utils/helpers';
 import { BOOKING_HOURS } from '../../utils/constants';
 import styled from 'styled-components';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { IResourceReducer } from '../../redux/resource/_resource.interfaces';
 import { getResource } from '../../services/resource.service';
 import Loader from '../atoms/Loader';
+import { IReducer } from '../../redux/_global.interfaces';
+import { getBookings } from '../../services/bookings.service';
 
 const CalendarEl = styled.div<{ borderColor: string }>`
   background: #ededed;
@@ -96,25 +97,40 @@ const CalendarElContainer = styled.div`
 
 const Calendar = () => {
   const typedUseSelector: TypedUseSelectorHook<{
-    resource: IResourceReducer;
+    [key: string]: IReducer;
   }> = useSelector;
 
   const dispatch = useDispatch();
   useEffect(() => {
     const userToken = getUserToken();
     dispatch(getResource(userToken));
+    dispatch(getBookings(userToken));
   }, [dispatch]);
-  const { pending, data, error } = typedUseSelector((state) => state.resource);
 
-  if (pending) {
+  const {
+    pending: pendingResource,
+    data: dataResource,
+    error: errorResource,
+  } = typedUseSelector((state) => state.resource);
+
+  const {
+    pending: pendingBookings,
+    data: dataBookings,
+    error: errorBookings,
+  } = typedUseSelector((state) => state.bookings);
+
+  if (pendingResource || pendingBookings) {
     return <Loader height={2} />;
   }
 
-  if (error) {
+  if (errorResource || errorBookings) {
     return <div>Error ...</div>;
   }
 
-  const { data: resourceData } = data;
+  const { data: resourceData } = dataResource;
+  const { data: bookingData } = dataBookings;
+  
+  console.log(bookingData);
 
   return (
     <CalendarElContainer>
