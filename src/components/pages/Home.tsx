@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { PageLayout } from '../PageLayout';
 import { IHome } from './_pages.interfaces';
 import styled from 'styled-components';
@@ -65,7 +65,9 @@ const Home: React.FunctionComponent<IHome> = ({ from }) => {
             </div>
           </div>
         ) : (
-          <div className="loggedIn" />
+          <div className="loggedIn">
+
+          </div>
         )}
       </HomeContainer>
     </PageLayout>

@@ -5,6 +5,8 @@ import loader from '../assets/loader.gif';
 import meetingHor from '../assets/meetingHor.jpg';
 import { IActionsMap, IStringMap } from './_config.interfaces';
 
+export const URI = process.env.REACT_APP_URI;
+
 export const MOBILE_BREAKPOINT: number = 568;
 
 export const IMAGES: IStringMap = {

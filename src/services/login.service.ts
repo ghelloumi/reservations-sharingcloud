@@ -7,6 +7,7 @@ import {
   ISuccessLogin,
   ISuccessLogout,
 } from '../redux/login/_login.interfaces';
+import {URI} from "../utils/constants";
 
 function handleResponse(response: any, type?: string) {
   return response.text().then((text: string) => {
@@ -31,7 +32,7 @@ export function login(username: string) {
     dispatch(loginActions.requestLogin({ username }));
 
     try {
-      const response = await fetch('http://localhost:4000/login');
+      const response = await fetch(`${URI}/login`);
       const user = await handleResponse(response, 'login');
       localStorage.setItem('user', JSON.stringify(user));
       dispatch(loginActions.successLogin(user));
@@ -49,7 +50,7 @@ export function logout(userToken?: string) {
     dispatch(loginActions.requestLogout());
 
     try {
-      const result = await fetch('http://localhost:4000/logout', {
+      const result = await fetch(`${URI}/logout`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${userToken}`,
