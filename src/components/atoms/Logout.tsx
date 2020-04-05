@@ -1,29 +1,22 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../services/login.service';
+import { getUserToken } from '../../utils/helpers';
 
 const Logout: React.FunctionComponent<{
   ariaHidden: boolean;
   ariaLabel: string;
   handleClick?: any;
 }> = ({ ariaHidden, ariaLabel, handleClick }) => {
-  // const [navigate, setNavigate] = useState(false);
-
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    const user = localStorage.getItem('user');
-    if (user) {
+    const userToken = getUserToken();
+    if (userToken) {
       if (handleClick) handleClick();
-      dispatch(logout(JSON.parse(user)?.data?.token));
-      // setNavigate(true);
+      dispatch(logout(userToken));
     }
   };
-
-  // if (navigate) {
-  //   return <Redirect to="/" push={true} />;
-  // }
 
   return (
     <a

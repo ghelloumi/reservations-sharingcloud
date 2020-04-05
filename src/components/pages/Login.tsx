@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import Image from '../atoms/Image';
 import { IMAGES, MOBILE_BREAKPOINT } from '../../utils/constants';
 import { media } from '../../theme/responsive.config';
+import Loader from '../atoms/Loader';
 
 const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
   display: flex;
@@ -15,7 +16,6 @@ const LoginContainer = styled.div<{ submitted: boolean; password: string }>`
   margin: 1rem 8rem;
   background: #f2f2f2;
   box-shadow: 0 0 1rem #d5d4d4;
-  
 
   > div {
     width: 50%;
@@ -247,15 +247,7 @@ const Login: React.FunctionComponent = () => {
               </div>
             </div>
             <div className="submit__form">
-              {loggingIn ? (
-                <Image
-                  alt="Login loading"
-                  src={IMAGES.loader}
-                  className="LoadingImage"
-                />
-              ) : (
-                <button>Login</button>
-              )}
+              {loggingIn ? <Loader /> : <button>Login</button>}
             </div>
           </form>
         </div>

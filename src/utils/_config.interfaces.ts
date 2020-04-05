@@ -7,3 +7,7 @@ export interface IActionsMap {
     [key: string]: string;
   };
 }
+
+export interface IBookingHours {
+  [key: string]: number
+}

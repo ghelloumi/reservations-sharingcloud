@@ -4,11 +4,10 @@ import { IHome } from './_pages.interfaces';
 import styled from 'styled-components';
 import { isLoggedIn } from '../../utils/helpers';
 import { Link } from 'react-router-dom';
+import Calendar from '../organisms/Calendar';
 
 const HomeContainer = styled.div`
-  div {
-    flex-direction: column;
-  }
+  width: 100%;
 
   div.not__loggedIn {
     h1 {
@@ -47,9 +46,6 @@ const HomeContainer = styled.div`
       }
     }
   }
-
-  div.loggedIn {
-  }
 `;
 
 const Home: React.FunctionComponent<IHome> = ({ from }) => {
@@ -65,9 +61,7 @@ const Home: React.FunctionComponent<IHome> = ({ from }) => {
             </div>
           </div>
         ) : (
-          <div className="loggedIn">
-
-          </div>
+          <Calendar />
         )}
       </HomeContainer>
     </PageLayout>

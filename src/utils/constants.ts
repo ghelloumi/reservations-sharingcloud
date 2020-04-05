@@ -3,7 +3,7 @@ import imageNotFound from '../assets/imageNotFound.png';
 import meeting from '../assets/meeting.jpg';
 import loader from '../assets/loader.gif';
 import meetingHor from '../assets/meetingHor.jpg';
-import { IActionsMap, IStringMap } from './_config.interfaces';
+import { IActionsMap, IBookingHours, IStringMap } from './_config.interfaces';
 
 export const URI = process.env.REACT_APP_URI;
 
@@ -28,6 +28,16 @@ export const ACTIONS: IActionsMap = {
     LOGIN_FAILURE: 'LOGIN_FAILURE',
     LOGOUT_REQUEST: 'LOGOUT_REQUEST',
     LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
-    LOGOUT_FAILURE: 'LOGOUT_FAILURE'
+    LOGOUT_FAILURE: 'LOGOUT_FAILURE',
   },
+  RESOURCE_ACTIONS: {
+    RESOURCE_REQUEST: 'RESOURCE_REQUEST',
+    RESOURCE_SUCCESS: 'RESOURCE_SUCCESS',
+    RESOURCE_FAILURE: 'RESOURCE_FAILURE',
+  }
+};
+
+export const BOOKING_HOURS: IBookingHours = {
+  from: 8,
+  to: 20,
 };

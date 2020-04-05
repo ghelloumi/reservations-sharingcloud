@@ -8,6 +8,22 @@ export function authHeader() {
   }
 }
 
+export function handleResponse(response: any, type?: string) {
+  return response.text().then((text: string) => {
+    const data = text && JSON.parse(text);
+    if (!response.ok) {
+      if (response.status === 401 && type === 'login') {
+        window.location.reload();
+      }
+
+      const error = (data && data.message) || response.statusText;
+      return Promise.reject(error);
+    }
+
+    return data;
+  });
+}
+
 export const isLoggedIn = () => {
   const user = localStorage.getItem('user');
   let expiredSession = true;
@@ -15,5 +31,19 @@ export const isLoggedIn = () => {
     const expirationDate = JSON.parse(user)?.data.expirationDate;
     expiredSession = new Date().getTime() > new Date(expirationDate).getTime();
   }
-  return !expiredSession
-}
+  return !expiredSession;
+};
+
+export const getUserToken = () => {
+  const user = localStorage.getItem('user');
+  if (user) {
+    return JSON.parse(user)?.data?.token;
+  }
+
+  return null;
+};
+
+export const range = (start: number, end: number): number[] => {
+  if (start === end) return [start];
+  return [start, ...range(start + 1, end)];
+};

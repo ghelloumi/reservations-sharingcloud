@@ -1,30 +1,11 @@
-interface IActionType {
-  type: string;
-}
-
-export interface IResponse {
-  token: string;
-  expirationDate: string;
-}
+import {IActionType, IResponse} from "../_global.interfaces";
 
 export interface IRequestLogin extends IActionType {
   user?: { username: string };
 }
 
-export interface ISuccessLogin extends IActionType {
-  user: IResponse;
-}
-
-export interface IFailureLogin extends IActionType {
-  error: any;
-}
-
 export interface ISuccessLogout extends IActionType {
   data: null;
-}
-
-export interface IError extends IActionType {
-  message: string;
 }
 
 export interface IAuthenticationAction extends IActionType {

@@ -1,10 +1,10 @@
-import React, {SyntheticEvent} from 'react';
-import {IMAGES} from '../../utils/constants';
+import React, { SyntheticEvent } from 'react';
+import { IMAGES } from '../../utils/constants';
 import styled from 'styled-components';
-import {IImage} from "./_atoms.interfaces";
+import { IImage } from './_atoms.interfaces';
 
 const ImageEl = styled.img`
-  // height: ${(props) => props.height}rem;
+  height: ${(props) => props.height}rem;
 `;
 
 const onError = (e: SyntheticEvent) => {
@@ -14,9 +14,20 @@ const onError = (e: SyntheticEvent) => {
   }
 };
 
-const Image: React.FunctionComponent<IImage> = ({alt, src, className}) => {
+const Image: React.FunctionComponent<IImage> = ({
+  alt,
+  src,
+  className,
+  height,
+}) => {
   return (
-    <ImageEl alt={alt} src={src} onError={onError} className={className}/>
+    <ImageEl
+      alt={alt}
+      src={src}
+      onError={onError}
+      className={className}
+      height={height}
+    />
   );
 };
 

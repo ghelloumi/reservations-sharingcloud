@@ -24,7 +24,7 @@ export const authentication: Reducer<
       return {
         ...state,
         loggingIn: false,
-        user: action.user,
+        user: action.data,
       };
     case ACTIONS.LOGIN_ACTIONS.LOGIN_FAILURE:
       return { ...state, loggingIn: false, error: action.error };

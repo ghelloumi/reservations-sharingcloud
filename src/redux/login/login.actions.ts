@@ -1,5 +1,5 @@
 import { ACTIONS } from '../../utils/constants';
-import { IResponse } from './_login.interfaces';
+import {IResponse} from "../_global.interfaces";
 
 export const loginActions = {
   requestLogin,
@@ -14,8 +14,8 @@ function requestLogin(user: { username: string }) {
   return { type: ACTIONS.LOGIN_ACTIONS.LOGIN_REQUEST, user };
 }
 
-function successLogin(user: IResponse) {
-  return { type: ACTIONS.LOGIN_ACTIONS.LOGIN_SUCCESS, user };
+function successLogin(data: IResponse) {
+  return { type: ACTIONS.LOGIN_ACTIONS.LOGIN_SUCCESS, data };
 }
 
 function failureLogin(error: string) {
