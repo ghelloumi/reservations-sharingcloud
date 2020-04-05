@@ -43,6 +43,14 @@ export const getUserToken = () => {
   return null;
 };
 
+export const getHeaders = (userToken: string) => ({
+  method: 'GET',
+  headers: {
+    Authorization: `Bearer ${userToken}`,
+    'Content-Type': 'application/json',
+  },
+});
+
 export const range = (start: number, end: number): number[] => {
   if (start === end) return [start];
   return [start, ...range(start + 1, end)];

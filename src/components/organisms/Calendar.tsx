@@ -53,6 +53,7 @@ const CalendarEl = styled.div<{ borderColor: string }>`
       }
       .hours {
         display: flex;
+        position: relative;
 
         .hourContainer {
           border: 1px solid ${(props) => props.borderColor};
@@ -77,11 +78,21 @@ const CalendarEl = styled.div<{ borderColor: string }>`
           .res {
             height: 3rem;
             background: #f7f7f7;
+            position: relative;
           }
         }
       }
     }
   }
+`;
+
+const Booked = styled.div<{ data: any }>`
+  position: absolute;
+  height: calc(3rem - 1px);
+  background: #f44336;
+  z-index: 1;
+  left: ${(props) => props.data.start.p}%;
+  width: ${(props) => props.data.duration}%;
 `;
 
 const CalendarElContainer = styled.div`
@@ -130,8 +141,6 @@ const Calendar = () => {
   const { data: resourceData } = dataResource;
   const { data: bookingData } = dataBookings;
 
-  console.log(bookingData);
-
   return (
     <CalendarElContainer>
       <h2>
@@ -140,18 +149,32 @@ const Calendar = () => {
       <CalendarEl className="loggedIn" borderColor={'#b9b9b9'}>
         <div className="users">
           <div className="user">Users</div>
-          <div className="user">Ghassen</div>
-          <div className="user">Sirine</div>
+          {bookingData?.map((e: any, i: number) => (
+            <div key={i} className="user">
+              {e.name}
+            </div>
+          ))}
         </div>
         <div className="timeLine">
           <div>
             <div className="date">{moment().format('MMM Do YY')}</div>
             <div className="hours">
-              {range(BOOKING_HOURS.from, BOOKING_HOURS.to).map((e, i) => (
-                <div className="hourContainer" key={i}>
+              {range(BOOKING_HOURS.from, BOOKING_HOURS.to).map((e) => (
+                <div className="hourContainer" key={e}>
                   <div className="hour">{e}</div>
-                  <div className="res">res</div>
-                  <div className="res">res</div>
+                  {bookingData?.map((data: any, i: number) => (
+                    <div key={i} className="res">
+                      {data.booked.some((item: any) => item.start.h === e) && (
+                        <Booked
+                          data={
+                            data.booked.filter(
+                              (item: any) => item.start.h === e
+                            )[0]
+                          }
+                        />
+                      )}
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>

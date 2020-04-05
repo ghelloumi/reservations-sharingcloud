@@ -43,6 +43,6 @@ export const ACTIONS: IActionsMap = {
 };
 
 export const BOOKING_HOURS: IBookingHours = {
-  from: 8,
-  to: 20,
+  from: 0,
+  to: 23,
 };

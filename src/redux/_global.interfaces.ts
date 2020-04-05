@@ -3,7 +3,7 @@ export interface IActionType {
 }
 
 export interface IResponse {
-  [key: string]: string | number;
+  [key: string]: any;
 }
 
 export interface IError extends IActionType {
