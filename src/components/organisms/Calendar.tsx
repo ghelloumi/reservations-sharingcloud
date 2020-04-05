@@ -55,7 +55,7 @@ const CalendarEl = styled.div<{ borderColor: string }>`
 
         .hourContainer {
           border: 1px solid ${(props) => props.borderColor};
-          width: 4rem;
+          width: 100%;
           border-left: 0;
           min-width: 3rem;
           border-bottom: 0;
