@@ -6,6 +6,7 @@ import Burger from '../atoms/Burger';
 import ResponsiveMenu from './ResponsiveMenu';
 import { Link } from 'react-router-dom';
 import { MOBILE_BREAKPOINT } from '../../utils/constants';
+import Logout from '../atoms/Logout';
 
 const MenuEl = styled.nav`
   list-style: none;
@@ -16,15 +17,15 @@ const MenuEl = styled.nav`
     ${media.phone} {
       display: none;
     }
-
-    font-weight: bold;
     color: grey;
     text-decoration: none;
     transition: color 0.3s linear;
-    font-size: 1rem;
-    text-align: center;
     padding: 0 0.5rem;
     cursor: pointer;
+    border: 0;
+    font: unset;
+    background: transparent;
+    outline: none;
 
     &:hover {
       color: #474747;
@@ -44,7 +45,9 @@ const MenuEl = styled.nav`
 const Menu: React.FunctionComponent<{
   menus: Array<IMenu>;
 }> = ({ menus }) => {
-  const [mobileView, setMobileView] = useState(window.innerWidth <= MOBILE_BREAKPOINT);
+  const [mobileView, setMobileView] = useState(
+    window.innerWidth <= MOBILE_BREAKPOINT
+  );
 
   useEffect(() => {
     window.addEventListener('resize', () =>
@@ -58,16 +61,20 @@ const Menu: React.FunctionComponent<{
 
   return (
     <MenuEl role="navigation" aria-label="main desktop navigation">
-      {menus.map((e) => (
-        <Link
-          key={e.id}
-          to={`/${e.name.toLowerCase()}`}
-          aria-hidden={mobileView}
-          aria-label={e.name}
-        >
-          {e.name}
-        </Link>
-      ))}
+      {menus.map((e) =>
+        e.name.toLowerCase() !== 'logout' ? (
+          <Link
+            key={e.id}
+            to={`/${e.name.toLowerCase()}`}
+            aria-hidden={mobileView}
+            aria-label={e.name}
+          >
+            {e.name}
+          </Link>
+        ) : (
+          <Logout key={e.id} ariaHidden={mobileView} ariaLabel={e.name} />
+        )
+      )}
       <div>
         <Burger open={open} setOpen={setOpen} mobileView={mobileView} />
         <ResponsiveMenu open={open} menus={menus} setOpen={setOpen} />

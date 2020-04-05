@@ -4,6 +4,7 @@ import Image from '../atoms/Image';
 import { IMAGES, TEXTS } from '../../utils/constants';
 import Menu from '../molecules/Menu';
 import { IMenu } from '../molecules/_molecules.interfaces';
+import { isLoggedIn } from '../../utils/helpers';
 
 const BannerEl = styled.div`
   display: flex;
@@ -35,7 +36,7 @@ const ImageEl = styled(Image)`
 
 const menus: Array<IMenu> = [
   { id: 0, name: 'Home' },
-  { id: 1, name: 'Login' },
+  { id: 1, name: isLoggedIn() ? 'Logout' : 'Login' },
 ];
 
 const Banner: React.FunctionComponent = () => {

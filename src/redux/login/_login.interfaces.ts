@@ -8,7 +8,7 @@ export interface IResponse {
 }
 
 export interface IRequestLogin extends IActionType {
-  user: { username: string };
+  user?: { username: string };
 }
 
 export interface ISuccessLogin extends IActionType {
@@ -19,15 +19,23 @@ export interface IFailureLogin extends IActionType {
   error: any;
 }
 
+export interface ISuccessLogout extends IActionType {
+  data: null;
+}
+
 export interface IError extends IActionType {
   message: string;
 }
 
 export interface IAuthenticationAction extends IActionType {
-  user: { username: string } | { token: string; expirationDate: string };
+  user: { username: string } | IResponse;
+  error?: any;
+  data: ISuccessLogout;
 }
 
 export interface IAuthenticationReducer {
   loggingIn?: boolean;
-  user?: any;
+  user?: { username: string } | IResponse | ISuccessLogout;
+  loggingOut?: boolean;
+  error?: any;
 }

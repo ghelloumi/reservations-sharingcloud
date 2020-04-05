@@ -5,14 +5,14 @@ import {
   IFailureLogin,
   IRequestLogin,
   ISuccessLogin,
+  ISuccessLogout,
 } from '../redux/login/_login.interfaces';
 
-function handleResponse(response: any) {
+function handleResponse(response: any, type?: string) {
   return response.text().then((text: string) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
-      if (response.status === 401) {
-        logout();
+      if (response.status === 401 && type === 'login') {
         window.location.reload();
       }
 
@@ -32,16 +32,36 @@ export function login(username: string) {
 
     try {
       const response = await fetch('http://localhost:4000/login');
-      const user = await handleResponse(response);
+      const user = await handleResponse(response, 'login');
       localStorage.setItem('user', JSON.stringify(user));
       dispatch(loginActions.successLogin(user));
-      window.location.href = "/"
+      window.location.href = '/';
     } catch (error) {
       dispatch(loginActions.failureLogin(error.toString()));
     }
   };
 }
 
-export function logout() {
-  loginActions.logout();
+export function logout(userToken?: string) {
+  return async (
+    dispatch: Dispatch<ISuccessLogout | IRequestLogin | IFailureLogin | IError>
+  ) => {
+    dispatch(loginActions.requestLogout());
+
+    try {
+      const result = await fetch('http://localhost:4000/logout', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await handleResponse(result);
+      localStorage.removeItem('user');
+      window.location.href = '/';
+      dispatch(loginActions.successLogout(data));
+    } catch (error) {
+      dispatch(loginActions.failureLogout(error.toString()));
+    }
+  };
 }

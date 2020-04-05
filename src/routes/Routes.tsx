@@ -4,6 +4,7 @@ import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom';
 import NotFound from '../components/pages/NotFound';
 import Home from '../components/pages/Home';
 import Login from '../components/pages/Login';
+import {isLoggedIn} from "../utils/helpers";
 
 const Routes: React.FunctionComponent = () => {
   return (
@@ -14,11 +15,7 @@ const Routes: React.FunctionComponent = () => {
         exact
         path="/login"
         render={(props: RouteComponentProps<{ name?: string }>) =>
-          localStorage.getItem('user') ? (
-            <Home from={props.location} />
-          ) : (
-            <Login />
-          )
+          isLoggedIn() ? <Home from={props.location} /> : <Login />
         }
       />
       <Route path="*" component={NotFound} />

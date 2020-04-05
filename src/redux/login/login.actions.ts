@@ -5,7 +5,9 @@ export const loginActions = {
   requestLogin,
   successLogin,
   failureLogin,
-  logout,
+  requestLogout,
+  successLogout,
+  failureLogout,
 };
 
 function requestLogin(user: { username: string }) {
@@ -16,10 +18,18 @@ function successLogin(user: IResponse) {
   return { type: ACTIONS.LOGIN_ACTIONS.LOGIN_SUCCESS, user };
 }
 
-function failureLogin(error: any) {
+function failureLogin(error: string) {
   return { type: ACTIONS.LOGIN_ACTIONS.LOGIN_FAILURE, error };
 }
 
-function logout() {
-  return { type: ACTIONS.LOGIN_ACTIONS.LOGOUT };
+function requestLogout() {
+  return { type: ACTIONS.LOGIN_ACTIONS.LOGOUT_REQUEST };
+}
+
+function successLogout(data: any) {
+  return { type: ACTIONS.LOGIN_ACTIONS.LOGOUT_SUCCESS, data };
+}
+
+function failureLogout(error: string) {
+  return { type: ACTIONS.LOGIN_ACTIONS.LOGOUT_FAILURE, error };
 }

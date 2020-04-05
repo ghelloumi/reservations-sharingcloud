@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { IResponsiveMenu } from './_molecules.interfaces';
 import { Link } from 'react-router-dom';
+import Logout from '../atoms/Logout';
 
 export const StyledMenu = styled.nav<{ open: boolean }>`
   display: flex;
@@ -47,17 +48,26 @@ const ResponsiveMenu: React.FunctionComponent<IResponsiveMenu> = ({
       role="navigation"
       aria-label="main mobile navigation"
     >
-      {menus.map((e) => (
-        <Link
-          key={e.id}
-          to={`/${e.name.toLowerCase()}`}
-          aria-hidden={!open}
-          aria-label={e.name}
-          onClick={() => setOpen(!open)}
-        >
-          {e.name}
-        </Link>
-      ))}
+      {menus.map((e) =>
+        e.name.toLowerCase() !== 'logout' ? (
+          <Link
+            key={e.id}
+            to={`/${e.name.toLowerCase()}`}
+            aria-hidden={!open}
+            aria-label={e.name}
+            onClick={() => setOpen(!open)}
+          >
+            {e.name}
+          </Link>
+        ) : (
+          <Logout
+            key={e.id}
+            ariaHidden={!open}
+            ariaLabel={e.name}
+            handleClick={() => setOpen(!open)}
+          />
+        )
+      )}
     </StyledMenu>
   );
 };

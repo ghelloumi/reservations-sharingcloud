@@ -9,4 +9,12 @@ export function authHeader() {
   }
 }
 
-export const isLoggedIn = () => !!localStorage.getItem('user');
+export const isLoggedIn = () => {
+  const user = localStorage.getItem('user');
+  let expiredSession = true;
+  if (user) {
+    const expirationDate = JSON.parse(user)?.data.expirationDate;
+    expiredSession = new Date().getTime() > new Date(expirationDate).getTime();
+  }
+  return !expiredSession
+}

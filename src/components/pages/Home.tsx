@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import { PageLayout } from '../PageLayout';
 import { IHome } from './_pages.interfaces';
 import styled from 'styled-components';
