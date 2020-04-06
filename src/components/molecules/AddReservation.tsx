@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addBook } from '../../services/bookings.service';
 
 const AddReservationEl = styled.div`
-  > div {
+  > form {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -14,7 +14,6 @@ const AddReservationEl = styled.div`
       font-size: 1.2rem;
     }
     > select {
-      margin: 1rem;
       width: 8rem;
       height: 3rem;
       border: 1px solid #dadada;
@@ -48,6 +47,14 @@ const AddReservationEl = styled.div`
       border-radius: 0.5rem;
       font: unset;
       outline: none;
+    }
+
+    > div {
+      height: 2rem;
+      margin-top: 0.5rem;
+      > span {
+        color: #f44336;
+      }
     }
   }
   > h3 {
@@ -88,7 +95,7 @@ const AddReservation: React.FunctionComponent<{
       (number: number) => number >= convertTimeToMinutes()
     );
     const diff = (index > -1 ? arrStarts[index] : 1440) - current;
-    
+
     if (diff >= 10 && current > (index > 0 ? arrEnds[index - 1] : 0)) {
       for (let i = 1; i <= diff; i++) {
         !(i % 5) && i >= 10 && possibleBookingTimes.push(i);
@@ -120,7 +127,7 @@ const AddReservation: React.FunctionComponent<{
   return (
     <AddReservationEl>
       {possibleBookingTimes?.length ? (
-        <div>
+        <form name="form" onSubmit={handleAddReservation}>
           <p>Please choose the duration of reservation: </p>
           <select
             value={duration}
@@ -141,8 +148,14 @@ const AddReservation: React.FunctionComponent<{
             placeholder="Name..."
             required
           />
-          <button onClick={handleAddReservation}>Validate</button>
-        </div>
+          <button>Validate</button>
+
+          <div>
+            {name.length < 4 && (
+              <span>Name should have at least 3 character0s</span>
+            )}
+          </div>
+        </form>
       ) : (
         <h3>You can not book the room now</h3>
       )}
