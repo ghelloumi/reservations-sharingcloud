@@ -151,7 +151,7 @@ const AddReservation: React.FunctionComponent<{
           <button>Validate</button>
 
           <div>
-            {name.length < 4 && (
+            {name.length < 3 && (
               <span>Name should have at least 3 character0s</span>
             )}
           </div>
