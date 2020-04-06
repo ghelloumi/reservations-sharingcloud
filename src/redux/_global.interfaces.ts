@@ -23,4 +23,5 @@ export interface IReducer {
   pending?: boolean;
   data?: any;
   error?: string;
+  newBookId?: string;
 }

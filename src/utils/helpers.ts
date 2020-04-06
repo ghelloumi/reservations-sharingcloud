@@ -59,7 +59,10 @@ export const range = (start: number, end: number): number[] => {
 };
 
 export const convertTimeToMinutes = (h?: number, m?: number): number =>
-  h && m ? h * 60 + m : moment().hours() * 60 + moment().minutes();
+  h !== undefined && m !== undefined
+    ? h * 60 + m
+    : moment().hours() * 60 + moment().minutes();
+
 export const convertTimeToPercentage = (t: number): number => (t * 100) / 60;
 
 export const getTimeDifference = (s: string, e: string): number => {

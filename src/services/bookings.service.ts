@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux';
 import {
   convertTimeToPercentage,
-  getHeaders, getTimeDifference,
+  getHeaders,
+  getTimeDifference,
   handleResponse,
 } from '../utils/helpers';
 import { URI } from '../utils/constants';
@@ -50,11 +51,13 @@ export function getBookings(userToken: string) {
               const hStart = moment(e.start).hours();
               const mEnd = moment(e.end).minutes();
               const hEnd = moment(e.end).hours();
-              const duration = convertTimeToPercentage(getTimeDifference(e.start, e.end));
+              const durationPercentage = convertTimeToPercentage(
+                getTimeDifference(e.start, e.end)
+              );
 
               return {
                 ...e,
-                duration,
+                durationPercentage,
                 startDate: e.start,
                 start: {
                   h: hStart,
@@ -68,7 +71,7 @@ export function getBookings(userToken: string) {
                 },
               };
             }),
-            loggedUser: user.data.ide === loggedUserData.data.id,
+            loggedUser: user.data.id === loggedUserData.data.id,
           };
         });
 
@@ -85,14 +88,17 @@ export function getBookings(userToken: string) {
   };
 }
 
-export function addBook(userToken: string, book: any) {
+export function addBook(
+  userToken: string,
+  reservationData: { name: string; duration: number }
+) {
   return async (dispatch: Dispatch<IActionType | ISuccess | IError>) => {
     dispatch(bookingsActions.requestBook());
 
     try {
-      const response = await fetch(`${URI}/resource`, {
+      const response = await fetch(`${URI}/bookings`, {
         ...getHeaders(userToken),
-        body: JSON.stringify(book),
+        body: JSON.stringify(reservationData),
         method: 'POST',
       });
       const data = await handleResponse(response);

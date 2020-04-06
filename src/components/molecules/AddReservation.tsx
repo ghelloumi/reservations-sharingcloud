@@ -1,6 +1,8 @@
-import React from 'react';
-import { convertTimeToMinutes } from '../../utils/helpers';
+import React, { useEffect, useState } from 'react';
+import { convertTimeToMinutes, getUserToken } from '../../utils/helpers';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { addBook } from '../../services/bookings.service';
 
 const AddReservationEl = styled.div`
   > div {
@@ -35,52 +37,110 @@ const AddReservationEl = styled.div`
       outline: none;
       cursor: pointer;
     }
+
+    > input {
+      width: 12rem;
+      height: 2rem;
+      padding: 1rem;
+      margin: 1rem;
+      border: 1px solid #dadada;
+      background: #fcfcfc;
+      border-radius: 0.5rem;
+      font: unset;
+      outline: none;
+    }
   }
   > h3 {
   }
 `;
 
-const AddReservation: React.FunctionComponent<{ bookingData: any }> = ({
-  bookingData,
-}) => {
-  const arr = bookingData
-    .map((e: any) => {
-      const arr: number[] = [];
-      e.booked.forEach((e: any) =>
-        arr.push(convertTimeToMinutes(e.start.h, e.start.m))
-      );
-      return arr;
-    })
-    .flat(1);
-
-  const current = convertTimeToMinutes();
-
-  const index = arr.findIndex(
-    (number: number) => number >= convertTimeToMinutes()
+const AddReservation: React.FunctionComponent<{
+  bookingData: any;
+  onAddReservation: any;
+}> = ({ bookingData, onAddReservation }) => {
+  const [possibleBookingTimes, setPossibleBookingTimes] = useState<number[]>(
+    []
   );
 
-  const possibleBookingTimes: number[] = [];
+  useEffect(() => {
+    const possibleBookingTimes: number[] = [];
 
-  const diff = (index > -1 ? arr[index] : 1440) - current;
-  if (diff >= 10 && current > (index > 0 ? arr[index - 1] : 0)) {
-    for (let i = 1; i <= diff; i++) {
-      !(i % 5) && i >= 10 && possibleBookingTimes.push(i);
+    const arr = bookingData
+      .map((e: any) => {
+        const arr: { start: number; end: number }[] = [];
+
+        e.booked.forEach((e: any) =>
+          arr.push({
+            start: convertTimeToMinutes(e.start.h, e.start.m),
+            end: convertTimeToMinutes(e.end.h, e.end.m),
+          })
+        );
+        return arr;
+      })
+      .flat(1);
+
+    const arrStarts = arr.map((e: any) => e.start);
+    const arrEnds = arr.map((e: any) => e.end);
+
+    const current = convertTimeToMinutes();
+    const index = arrStarts.findIndex(
+      (number: number) => number >= convertTimeToMinutes()
+    );
+    const diff = (index > -1 ? arrStarts[index] : 1440) - current;
+    if (diff >= 10 && current > (index > 0 ? arrEnds[index - 1] : 0)) {
+      for (let i = 1; i <= diff; i++) {
+        !(i % 5) && i >= 10 && possibleBookingTimes.push(i);
+      }
     }
-  }
+    console.log(arr);
+
+    setPossibleBookingTimes(possibleBookingTimes);
+  }, [bookingData]);
+
+  const [name, setName] = useState('');
+  const [duration, setDuration] = useState(
+    possibleBookingTimes?.length ? possibleBookingTimes[0] : 0
+  );
+
+  const dispatch = useDispatch();
+
+  const handleAddReservation = () => {
+    const userToken = getUserToken();
+    const reservationData = {
+      name,
+      duration,
+    };
+
+    dispatch(addBook(userToken, reservationData));
+
+    onAddReservation();
+  };
 
   return (
     <AddReservationEl>
       {possibleBookingTimes?.length ? (
         <div>
           <p>Please choose the duration of reservation: </p>
-          <select>
+          <select
+            value={duration}
+            onChange={(e) => setDuration(parseInt(e.target.value, 10))}
+            required
+          >
+            <option value="" />
             {possibleBookingTimes.map((e: number, i: number) => (
               <option key={i} value={e}>
                 {e}
               </option>
             ))}
           </select>
-          <button>Validate</button>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name..."
+            required
+          />
+          <button onClick={handleAddReservation}>Validate</button>
         </div>
       ) : (
         <h3>You can not book the room now</h3>

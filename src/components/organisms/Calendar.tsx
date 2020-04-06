@@ -94,7 +94,7 @@ const Booked = styled.div<{ data: any }>`
   background: #f44336;
   z-index: 1;
   left: ${(props) => props.data.start.p}%;
-  width: ${(props) => props.data.duration}%;
+  width: ${(props) => props.data.durationPercentage}%;
 `;
 
 const CalendarElContainer = styled.div`
@@ -130,13 +130,6 @@ const Calendar = () => {
     [key: string]: IReducer;
   }> = useSelector;
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const userToken = getUserToken();
-    dispatch(getResource(userToken));
-    dispatch(getBookings(userToken));
-  }, [dispatch]);
-
   const {
     pending: pendingResource,
     data: dataResource,
@@ -147,9 +140,18 @@ const Calendar = () => {
     pending: pendingBookings,
     data: dataBookings,
     error: errorBookings,
+    newBookId,
   } = typedUseSelector((state) => state.bookings);
 
   const [modalOpened, setModalOpened] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userToken = getUserToken();
+    dispatch(getResource(userToken));
+    dispatch(getBookings(userToken));
+  }, [dispatch, newBookId]);
 
   if (pendingResource || pendingBookings) {
     return <Loader height={2} />;
@@ -161,6 +163,10 @@ const Calendar = () => {
 
   const { data: resourceData } = dataResource;
   const { data: bookingData } = dataBookings;
+
+  const handleAddReservation = () => {
+    setModalOpened(false);
+  };
 
   return (
     <CalendarElContainer>
@@ -186,13 +192,13 @@ const Calendar = () => {
                   {bookingData?.map((data: any, i: number) => (
                     <div key={i} className="res">
                       {data.booked.some((item: any) => item.start.h === e) && (
-                        <Booked
-                          data={
-                            data.booked.filter(
-                              (item: any) => item.start.h === e
-                            )[0]
-                          }
-                        />
+                        <>
+                          {data.booked
+                            .filter((item: any) => item.start.h === e)
+                            .map((e: any, i: number) => (
+                              <Booked key={i} data={e} />
+                            ))}
+                        </>
                       )}
                     </div>
                   ))}
@@ -205,7 +211,10 @@ const Calendar = () => {
       <button onClick={() => setModalOpened(true)}>Reserve</button>
       {modalOpened && (
         <Modal close={() => setModalOpened(false)}>
-          <AddReservation bookingData={bookingData}/>
+          <AddReservation
+            bookingData={bookingData}
+            onAddReservation={handleAddReservation}
+          />
         </Modal>
       )}
     </CalendarElContainer>
