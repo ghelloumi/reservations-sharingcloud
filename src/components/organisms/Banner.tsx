@@ -17,7 +17,7 @@ const BannerEl = styled.div`
   position: relative;
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 
   > span {
     color: #4d4d4d;

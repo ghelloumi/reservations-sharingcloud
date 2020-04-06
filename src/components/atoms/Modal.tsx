@@ -39,14 +39,12 @@ const ModalEl = styled.div`
   .modal__container {
     max-width: 80%;
     max-height: 60%;
-    min-height: 50%;
-    min-width: 60%;
     background: #f5f5f5;
     position: absolute;
     z-index: 1;
     border-radius: 1rem;
     box-shadow: 0 0 1rem #3c3c3c;
-    padding: 1rem;
+    padding: .5rem 0 2rem 0;
     overflow: overlay;
 
     &__close {

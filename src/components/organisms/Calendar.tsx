@@ -9,6 +9,7 @@ import Loader from '../atoms/Loader';
 import { IReducer } from '../../redux/_global.interfaces';
 import { getBookings } from '../../services/bookings.service';
 import Modal from '../atoms/Modal';
+import AddReservation from '../molecules/AddReservation';
 
 const CalendarEl = styled.div<{ borderColor: string }>`
   background: #ededed;
@@ -202,7 +203,11 @@ const Calendar = () => {
         </div>
       </CalendarEl>
       <button onClick={() => setModalOpened(true)}>Reserve</button>
-      {modalOpened && <Modal close={() => setModalOpened(false)}>Hello</Modal>}
+      {modalOpened && (
+        <Modal close={() => setModalOpened(false)}>
+          <AddReservation bookingData={bookingData}/>
+        </Modal>
+      )}
     </CalendarElContainer>
   );
 };

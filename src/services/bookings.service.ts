@@ -1,5 +1,9 @@
 import { Dispatch } from 'redux';
-import { getHeaders, handleResponse } from '../utils/helpers';
+import {
+  convertTimeToPercentage,
+  getHeaders, getTimeDifference,
+  handleResponse,
+} from '../utils/helpers';
 import { URI } from '../utils/constants';
 import { IActionType, IError, ISuccess } from '../redux/_global.interfaces';
 import { bookingsActions } from '../redux/bookings/bookings.actions';
@@ -42,12 +46,12 @@ export function getBookings(userToken: string) {
           return {
             ...user.data,
             booked: booked.map((e: any) => {
-              const mStart = parseInt(moment(e.start).format('mm'), 10);
-              const hStart = parseInt(moment(e.start).format('HH'), 10);
-              const mEnd = parseInt(moment(e.end).format('mm'), 10);
-              const hEnd = parseInt(moment(e.end).format('HH'), 10);
-              const duration =
-                ((hEnd * 60 + mEnd - (hStart * 60 + mStart)) * 100) / 60;
+              const mStart = moment(e.start).minutes();
+              const hStart = moment(e.start).hours();
+              const mEnd = moment(e.end).minutes();
+              const hEnd = moment(e.end).hours();
+              const duration = convertTimeToPercentage(getTimeDifference(e.start, e.end));
+
               return {
                 ...e,
                 duration,
@@ -55,12 +59,12 @@ export function getBookings(userToken: string) {
                 start: {
                   h: hStart,
                   m: mStart,
-                  p: (mStart * 100) / 60,
+                  p: convertTimeToPercentage(mStart),
                 },
                 end: {
                   h: hEnd,
                   m: mEnd,
-                  p: (mEnd * 100) / 60,
+                  p: convertTimeToPercentage(mEnd),
                 },
               };
             }),

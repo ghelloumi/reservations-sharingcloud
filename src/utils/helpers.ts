@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function authHeader() {
   let user = JSON.parse(localStorage.getItem('user') as string);
 
@@ -54,4 +56,13 @@ export const getHeaders = (userToken: string) => ({
 export const range = (start: number, end: number): number[] => {
   if (start === end) return [start];
   return [start, ...range(start + 1, end)];
+};
+
+export const convertTimeToMinutes = (h?: number, m?: number): number =>
+  h && m ? h * 60 + m : moment().hours() * 60 + moment().minutes();
+export const convertTimeToPercentage = (t: number): number => (t * 100) / 60;
+
+export const getTimeDifference = (s: string, e: string): number => {
+  const diff = moment(e).diff(moment(s));
+  return moment.duration(diff).minutes();
 };

@@ -1,6 +1,6 @@
 import { ACTIONS } from '../../utils/constants';
 import { Reducer } from 'redux';
-import {IAction, IReducer} from "../_global.interfaces";
+import { IAction, IReducer } from '../_global.interfaces';
 
 const initialState = { pending: false, data: {}, error: '' };
 
