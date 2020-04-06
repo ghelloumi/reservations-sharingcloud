@@ -19,6 +19,7 @@ const Image: React.FunctionComponent<IImage> = ({
   src,
   className,
   height,
+  onClick,
 }) => {
   return (
     <ImageEl
@@ -27,6 +28,7 @@ const Image: React.FunctionComponent<IImage> = ({
       onError={onError}
       className={className}
       height={height}
+      onClick={onClick}
     />
   );
 };

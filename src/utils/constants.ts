@@ -3,6 +3,7 @@ import imageNotFound from '../assets/imageNotFound.png';
 import meeting from '../assets/meeting.jpg';
 import loader from '../assets/loader.gif';
 import meetingHor from '../assets/meetingHor.jpg';
+import close from '../assets/close.jpg';
 import { IActionsMap, IBookingHours, IStringMap } from './_config.interfaces';
 
 export const URI = process.env.REACT_APP_URI;
@@ -15,6 +16,7 @@ export const IMAGES: IStringMap = {
   meeting,
   loader,
   meetingHor,
+  close
 };
 
 export const TEXTS: IStringMap = {

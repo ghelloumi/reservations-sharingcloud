@@ -3,6 +3,7 @@ export interface IImage {
   src: string;
   className: string;
   height?: number;
+  onClick?: any;
 }
 
 export interface IBurger {
