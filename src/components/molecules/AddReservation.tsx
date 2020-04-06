@@ -77,7 +77,8 @@ const AddReservation: React.FunctionComponent<{
         );
         return arr;
       })
-      .flat(1);
+      .flat(1)
+      .sort((a: any, b: any) => a.start - b.start);
 
     const arrStarts = arr.map((e: any) => e.start);
     const arrEnds = arr.map((e: any) => e.end);
@@ -87,12 +88,12 @@ const AddReservation: React.FunctionComponent<{
       (number: number) => number >= convertTimeToMinutes()
     );
     const diff = (index > -1 ? arrStarts[index] : 1440) - current;
+    
     if (diff >= 10 && current > (index > 0 ? arrEnds[index - 1] : 0)) {
       for (let i = 1; i <= diff; i++) {
         !(i % 5) && i >= 10 && possibleBookingTimes.push(i);
       }
     }
-    console.log(arr);
 
     setPossibleBookingTimes(possibleBookingTimes);
   }, [bookingData]);
