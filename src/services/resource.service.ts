@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { handleResponse } from '../utils/helpers';
+import { getHeaders, handleResponse } from '../utils/helpers';
 import { URI } from '../utils/constants';
 import { resourceActions } from '../redux/resource/resource.actions';
 
@@ -10,13 +10,7 @@ export function getResource(userToken: string) {
     dispatch(resourceActions.requestResource());
 
     try {
-      const response = await fetch(`${URI}/resource`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(`${URI}/resource`, getHeaders(userToken));
       const data = await handleResponse(response);
       dispatch(resourceActions.successResource(data));
     } catch (error) {

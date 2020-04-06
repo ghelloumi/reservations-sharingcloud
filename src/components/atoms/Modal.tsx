@@ -101,13 +101,11 @@ const Modal: React.FunctionComponent<{
       // @ts-ignore
       modalContainerClose?.current?.childNodes[0] === e.target
     ) {
-      console.log('closing..');
       handleCloseModal();
     }
   };
 
   const handleCloseModal = () => {
-    // console.log('closing..')
     close();
   };
 

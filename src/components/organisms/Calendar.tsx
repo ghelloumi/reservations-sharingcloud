@@ -160,7 +160,7 @@ const Calendar = () => {
 
   const { data: resourceData } = dataResource;
   const { data: bookingData } = dataBookings;
-console.log(modalOpened)
+
   return (
     <CalendarElContainer>
       <h2>

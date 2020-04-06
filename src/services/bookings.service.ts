@@ -80,3 +80,38 @@ export function getBookings(userToken: string) {
     }
   };
 }
+
+export function addBook(userToken: string, book: any) {
+  return async (dispatch: Dispatch<IActionType | ISuccess | IError>) => {
+    dispatch(bookingsActions.requestBook());
+
+    try {
+      const response = await fetch(`${URI}/resource`, {
+        ...getHeaders(userToken),
+        body: JSON.stringify(book),
+        method: 'POST',
+      });
+      const data = await handleResponse(response);
+      dispatch(bookingsActions.successBook(data));
+    } catch (error) {
+      dispatch(bookingsActions.failureBook(error.toString()));
+    }
+  };
+}
+
+export function deleteBook(userToken: string, id: string) {
+  return async (dispatch: Dispatch<IActionType | ISuccess | IError>) => {
+    dispatch(bookingsActions.requestDeleteBook());
+
+    try {
+      const response = await fetch(`${URI}/bookings/${id}`, {
+        ...getHeaders(userToken),
+        method: 'DELETE',
+      });
+      const data = await handleResponse(response);
+      dispatch(bookingsActions.successDeleteBook(data));
+    } catch (error) {
+      dispatch(bookingsActions.failureDeleteBook(error.toString()));
+    }
+  };
+}
