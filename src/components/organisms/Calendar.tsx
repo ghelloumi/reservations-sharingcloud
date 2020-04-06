@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { getUserToken, range } from '../../utils/helpers';
 import { BOOKING_HOURS } from '../../utils/constants';
@@ -8,6 +8,7 @@ import { getResource } from '../../services/resource.service';
 import Loader from '../atoms/Loader';
 import { IReducer } from '../../redux/_global.interfaces';
 import { getBookings } from '../../services/bookings.service';
+import Modal from '../atoms/Modal';
 
 const CalendarEl = styled.div<{ borderColor: string }>`
   background: #ededed;
@@ -104,6 +105,23 @@ const CalendarElContainer = styled.div`
       color: #2f2f2f;
     }
   }
+
+  > button {
+    height: 3rem;
+    width: 10rem;
+    font: unset;
+    font-weight: 600;
+    background: gainsboro;
+    border: 1px solid #d8d8d8;
+    cursor: pointer;
+    outline: none;
+    transition: all 300ms ease-in;
+
+    &:hover {
+      background: #eeeeee;
+      box-shadow: 0 0 1rem #c6c6c6;
+    }
+  }
 `;
 
 const Calendar = () => {
@@ -130,6 +148,8 @@ const Calendar = () => {
     error: errorBookings,
   } = typedUseSelector((state) => state.bookings);
 
+  const [modalOpened, setModalOpened] = useState(false);
+
   if (pendingResource || pendingBookings) {
     return <Loader height={2} />;
   }
@@ -140,7 +160,7 @@ const Calendar = () => {
 
   const { data: resourceData } = dataResource;
   const { data: bookingData } = dataBookings;
-
+console.log(modalOpened)
   return (
     <CalendarElContainer>
       <h2>
@@ -181,6 +201,8 @@ const Calendar = () => {
           </div>
         </div>
       </CalendarEl>
+      <button onClick={() => setModalOpened(true)}>Reserve</button>
+      {modalOpened && <Modal close={() => setModalOpened(false)}>Hello</Modal>}
     </CalendarElContainer>
   );
 };
