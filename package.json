@@ -16,7 +16,7 @@
     "@types/redux-thunk": "^2.1.0",
     "@types/styled-components": "^5.0.1",
     "dotenv": "^8.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
